@@ -71,7 +71,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func pushRecieved(_ notification: Notification){
         
-        if let aps = notification.object["aps"]{
+        if let aps = (notification.object as AnyObject?)?["aps"] as AnyObject?{
             if let alert = aps["alert"] as? String {
                 CSNotificationView.show(in: self, tintColor: UIColor.white, font: UIFont(name: "Avenir-Light", size: 14)!, textAlignment: .center, image: nil, message: alert, duration: 5.0)
                 
@@ -172,10 +172,10 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
 
             var donorAvatarUrl:URL = URL(string: donorAvatarStringUrl)!
             
-            cell.donorAvatar.setImageWithURLRequest(NSURLRequest(URL: donorAvatarUrl), placeholderImage: nil, success: { (urlRequest, response, image) in
+            cell.donorAvatar.setImageWith(NSURLRequest(url: donorAvatarUrl) as URLRequest, placeholderImage: nil, success: { (urlRequest, response, image) in
                 cell.donorAvatar.image = image.resizedImage(to: cell.donorAvatar.bounds.size)
                 
-            }, failure: { (urlRequest: URLRequest!, response: URLResponse!, error: NSError!) -> Void in
+            }, failure: { (urlRequest, NSURLResponse, error) in
                 print("error occured: \(error)")
             })
         }
@@ -186,7 +186,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         
         if item.quantity > 1 {
             var bidsString = item.currentPrice.map({bidPrice in "$\(bidPrice)"}).joined(separator: ", ")
-            if count(bidsString) == 0 {
+            if bidsString.characters.count == 0 {
                 bidsString = "(none yet)"
             }
             

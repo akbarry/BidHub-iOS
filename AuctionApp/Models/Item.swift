@@ -12,9 +12,9 @@ enum ItemWinnerType {
 
 class Item: PFObject, PFSubclassing {
     
-    private lazy var __once: () = {
+    /*private lazy var __once: () = {
             self.registerSubclass()
-        }()
+        }()*/
     
     @NSManaged var name:String
     @NSManaged var price:Int
@@ -167,7 +167,7 @@ class Item: PFObject, PFSubclassing {
     var minimumBid: Int {
         get {
             if !currentPrice.isEmpty {
-                return currentPrice.minElement()
+                return currentPrice.min()!
             }else{
                 return price
             }
@@ -177,7 +177,7 @@ class Item: PFObject, PFSubclassing {
     var isWinning: Bool {
         get {
             let user = PFUser.current()
-            return currentWinners.contains(user.email)
+            return currentWinners.contains(user!.email)
         }
     }
     
@@ -185,13 +185,13 @@ class Item: PFObject, PFSubclassing {
     var hasBid: Bool {
         get {
             let user = PFUser.current()
-            return allBidders.contains(user.email)
+            return allBidders.contains(user!.email)
         }
     }
     
     override class func initialize() {
         var onceToken : Int = 0;
-        _ = self.__once
+        //_ = self.__once
     }
     
     class func parseClassName() -> String! {

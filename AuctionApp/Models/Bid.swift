@@ -7,9 +7,10 @@ import UIKit
 
 class Bid: PFObject, PFSubclassing {
     
+    /*
     private lazy var __once: () = {
             self.registerSubclass()
-        }()
+        }()*/
     
     @NSManaged var email: String
     @NSManaged var name: String
@@ -47,7 +48,7 @@ class Bid: PFObject, PFSubclassing {
     
     override class func initialize() {
         var onceToken : Int = 0;
-        _ = self.__once
+        //_ = self.__once
     }
     
     class func parseClassName() -> String! {
