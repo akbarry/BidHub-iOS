@@ -7,7 +7,7 @@ import UIKit
 
 protocol ItemTableViewCellDelegate {
     
-    func cellDidPressBid(item: Item)
+    func cellDidPressBid(_ item: Item)
     
 }
 
@@ -42,7 +42,7 @@ class ItemTableViewCell: UITableViewCell {
     var item: Item?
     override func awakeFromNib() {
         super.awakeFromNib()
-        itemImageView.contentMode = .ScaleAspectFill
+        itemImageView.contentMode = .scaleAspectFill
         itemImageView.clipsToBounds = true
         alreadyLoaded = false
         
@@ -66,19 +66,19 @@ class ItemTableViewCell: UITableViewCell {
     
     func setWinning(){
         headerBackground.backgroundColor = winningBackgroundColor
-        moreInfoView.hidden = false
+        moreInfoView.isHidden = false
         moreInfoView.backgroundColor = winningBackgroundColor
         if let itemUW = item {
 
             switch(itemUW.winnerType){
-            case .Multiple:
-                let user = PFUser.currentUser()
+            case .multiple:
+                let user = PFUser.current()
                 if let index = find(itemUW.currentWinners, user.email){
                     moreInfoLabel.text = "YOUR BID IS #\(index + 1)"
                 }else{
                     fallthrough
                 }
-            case .Single:
+            case .single:
                 moreInfoLabel.text = "YOUR BID IS WINNING. NICE!"
             }
         }
@@ -86,19 +86,19 @@ class ItemTableViewCell: UITableViewCell {
     
     func setOutbid(){
         headerBackground.backgroundColor = outbidBackgroundColor
-        moreInfoView.hidden = false
+        moreInfoView.isHidden = false
         moreInfoView.backgroundColor = outbidBackgroundColor
         moreInfoLabel.text = "YOU'VE BEEN OUTBID. TRY HARDER?"
     }
     
     func setDefault(){
         headerBackground.backgroundColor = defaultBackgroundColor
-        moreInfoView.hidden = true
+        moreInfoView.isHidden = true
         moreInfoView.backgroundColor = defaultBackgroundColor
     }
     
     
-    @IBAction func bidNowPressed(sender: AnyObject) {
+    @IBAction func bidNowPressed(_ sender: AnyObject) {
         callDelegateWithBid()
     }
     

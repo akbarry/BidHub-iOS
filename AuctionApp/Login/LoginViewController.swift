@@ -17,29 +17,29 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    @IBAction func loginPressed(sender: AnyObject) {
+    @IBAction func loginPressed(_ sender: AnyObject) {
         
         if nameTextField.text != "" && emailTextField.text != "" {
             
             var user = PFUser()
-            user["fullname"] = nameTextField.text.lowercaseString
-            user.username = emailTextField.text.lowercaseString
+            user["fullname"] = nameTextField.text?.lowercased()
+            user.username = emailTextField.text?.lowercased()
             user.password = "test"
-            user.email = emailTextField.text.lowercaseString
+            user.email = emailTextField.text?.lowercased()
             
-            user.signUpInBackgroundWithBlock {
+            user.signUpInBackground {
                 (succeeded: Bool, error: NSError!) -> Void in
                 if succeeded == true {
                     self.registerForPush()
-                    self.performSegueWithIdentifier("loginToItemSegue", sender: nil)
+                    self.performSegue(withIdentifier: "loginToItemSegue", sender: nil)
                 } else {
                     let errorString = error.userInfo!["error"] as! NSString
                     println("Error Signing up: \(error)")
-                    PFUser.logInWithUsernameInBackground(user.username, password: user.password, block: { (user, error) -> Void in
+                    PFUser.logInWithUsername(inBackground: user.username, password: user.password, block: { (user, error) -> Void in
                         if error == nil {
                             
                             self.registerForPush()
-                            self.performSegueWithIdentifier("loginToItemSegue", sender: nil)
+                            self.performSegue(withIdentifier: "loginToItemSegue", sender: nil)
                         }else{
                             println("Error logging in ")
                             self.viewShaker?.shake()
@@ -56,21 +56,21 @@ class LoginViewController: UIViewController {
     
     
     func registerForPush() {
-        let user = PFUser.currentUser()
-        let currentInstalation = PFInstallation.currentInstallation()
-        currentInstalation["email"] = user.email
-        currentInstalation.saveInBackgroundWithBlock(nil)
+        let user = PFUser.current()
+        let currentInstalation = PFInstallation.current()
+        currentInstalation?["email"] = user?.email
+        currentInstalation?.saveInBackground(nil)
 
         
-        let application = UIApplication.sharedApplication()
+        let application = UIApplication.shared
         
-        if application.respondsToSelector("registerUserNotificationSettings:") {
+        if application.responds(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
             let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Sound | UIUserNotificationType.Badge, categories: nil)
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }else{
             let types: UIRemoteNotificationType = .Badge | .Alert | .Sound
-            application.registerForRemoteNotificationTypes(types)
+            application.registerForRemoteNotifications(matching: types)
         }
         
     }

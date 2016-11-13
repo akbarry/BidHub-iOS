@@ -6,11 +6,15 @@
 import UIKit
 
 enum ItemWinnerType {
-    case Single
-    case Multiple
+    case single
+    case multiple
 }
 
 class Item: PFObject, PFSubclassing {
+    
+    private lazy var __once: () = {
+            self.registerSubclass()
+        }()
     
     @NSManaged var name:String
     @NSManaged var price:Int
@@ -130,22 +134,22 @@ class Item: PFObject, PFSubclassing {
         }
     }
     
-    var openTime: NSDate {
+    var openTime: Date {
         get {
-            if let open =  self["opentime"] as? NSDate{
+            if let open =  self["opentime"] as? Date{
                 return open
             }else{
-                return NSDate()
+                return Date()
             }
         }
     }
     
-    var closeTime: NSDate {
+    var closeTime: Date {
         get {
-            if let close =  self["closetime"] as? NSDate{
+            if let close =  self["closetime"] as? Date{
                 return close
             }else{
-                return NSDate()
+                return Date()
             }
         }
     }
@@ -153,9 +157,9 @@ class Item: PFObject, PFSubclassing {
     var winnerType: ItemWinnerType {
         get {
             if quantity > 1 {
-                return .Multiple
+                return .multiple
             }else{
-                return .Single
+                return .single
             }
         }
     }
@@ -172,7 +176,7 @@ class Item: PFObject, PFSubclassing {
     
     var isWinning: Bool {
         get {
-            let user = PFUser.currentUser()
+            let user = PFUser.current()
             return contains(currentWinners, user.email)
         }
     }
@@ -180,16 +184,14 @@ class Item: PFObject, PFSubclassing {
     
     var hasBid: Bool {
         get {
-            let user = PFUser.currentUser()
+            let user = PFUser.current()
             return contains(allBidders, user.email)
         }
     }
     
     override class func initialize() {
-        var onceToken : dispatch_once_t = 0;
-        dispatch_once(&onceToken) {
-            self.registerSubclass()
-        }
+        var onceToken : Int = 0;
+        _ = self.__once
     }
     
     class func parseClassName() -> String! {

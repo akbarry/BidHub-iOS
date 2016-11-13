@@ -10,7 +10,7 @@ class DataManager: NSObject {
  
     var allItems: [Item] = [Item]()
 
-    var timer:NSTimer?
+    var timer:Timer?
     
     var sharedInstance : DataManager {
         struct Static {
@@ -21,15 +21,15 @@ class DataManager: NSObject {
     }
     
     
-    func getItems(completion: ([Item], NSError?) -> ()){
+    func getItems(_ completion: @escaping ([Item], NSError?) -> ()){
         let query = Item.query()
-        query.limit = 1000
-        query.addAscendingOrder("closetime")
-        query.addAscendingOrder("name")
-        query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
+        query?.limit = 1000
+        query?.addAscendingOrder("closetime")
+        query?.addAscendingOrder("name")
+        query?.findObjectsInBackground { (results, error) -> Void in
             if error != nil{
                 println("Error!! \(error)")
-                completion([Item](), error)
+                completion([Item](), error as NSError?)
             }else{
                 if let itemsUW = results as? [Item] {
                     self.allItems = itemsUW
@@ -39,51 +39,51 @@ class DataManager: NSObject {
         }
     }
     
-    func searchForQuery(query: String) -> ([Item]) {
-        return applyFilter(.Search(searchTerm: query))
+    func searchForQuery(_ query: String) -> ([Item]) {
+        return applyFilter(.search(searchTerm: query))
     }
     
-    func applyFilter(filter: FilterType) -> ([Item]) {
+    func applyFilter(_ filter: FilterType) -> ([Item]) {
         return allItems.filter({ (item) -> Bool in
-            return filter.predicate.evaluateWithObject(item)
+            return filter.predicate.evaluate(with: item)
         })
     }
     
-    func bidOn(item:Item, amount: Int, completion: (Bool, errorCode: String) -> ()){
+    func bidOn(_ item:Item, amount: Int, completion: @escaping (Bool, _ errorCode: String) -> ()){
         
-        let user = PFUser.currentUser()
+        let user = PFUser.current()
         
-        Bid(email: user.email, name: user.username, amount: amount, itemId: item.objectId)
-        .saveInBackgroundWithBlock { (success, error) -> Void in
+        Bid(email: (user?.email)!, name: (user?.username)!, amount: amount, itemId: item.objectId)
+        .saveInBackground { (success, error) -> Void in
             
             if error != nil {
                 
                 if let errorString:String = error.userInfo?["error"] as? String{
-                    completion(false, errorCode: errorString)
+                    completion(false, errorString)
                 }else{
-                    completion(false, errorCode: "")
+                    completion(false, "")
                 }
                 return
             }
             
             let newItemQuery: PFQuery = Item.query()
             newItemQuery.whereKey("objectId", equalTo: item.objectId)
-            newItemQuery.getFirstObjectInBackgroundWithBlock({ (item, error) -> Void in
+            newItemQuery.getFirstObjectInBackground({ (item, error) -> Void in
                 
                 if let itemUW = item as? Item {
                     self.replaceItem(itemUW)
                 }
-                completion(true, errorCode: "")
+                completion(true, "")
             })
             
             let channel = "a\(item.objectId)"
-            PFPush.subscribeToChannelInBackground(channel, block: { (success, error) -> Void in
+            PFPush.subscribeToChannel(inBackground: channel, block: { (success, error) -> Void in
                 
             })
         }
     }
     
-    func replaceItem(item: Item) {
+    func replaceItem(_ item: Item) {
         allItems = allItems.map { (oldItem) -> Item in
             if oldItem.objectId == item.objectId {
                 return item
@@ -94,37 +94,37 @@ class DataManager: NSObject {
 }
 
 
-enum FilterType: Printable {
-    case All
-    case NoBids
-    case MyItems
-    case Search(searchTerm: String)
+enum FilterType: CustomStringConvertible {
+    case all
+    case noBids
+    case myItems
+    case search(searchTerm: String)
     
     var description: String {
         switch self{
-        case .All:
+        case .all:
             return "All"
-        case .NoBids:
+        case .noBids:
             return "NoBids"
-        case .MyItems:
+        case .myItems:
             return "My Items"
-        case .Search:
+        case .search:
             return "Searching"
         }
     }
     
     var predicate: NSPredicate {
         switch self {
-        case .All:
+        case .all:
             return NSPredicate(value: true)
-        case .NoBids:
+        case .noBids:
             return NSPredicate(block: { (object, bindings) -> Bool in
                 if let item = object as? Item {
                     return item.numberOfBids == 0
                 }
                 return false
             })
-        case .MyItems:
+        case .myItems:
             return NSPredicate(block: { (object, bindings) -> Bool in
                 if let item = object as? Item {
                     return item.hasBid
@@ -132,7 +132,7 @@ enum FilterType: Printable {
                 return false
             })
 
-        case .Search(let searchTerm):
+        case .search(let searchTerm):
             return NSPredicate(format: "(donorName CONTAINS[c] %@) OR (name CONTAINS[c] %@) OR (itemDesctiption CONTAINS[c] %@)", searchTerm)
         default:
             return NSPredicate(value: true)
