@@ -28,7 +28,7 @@ class DataManager: NSObject {
         query?.addAscendingOrder("name")
         query?.findObjectsInBackground { (results, error) -> Void in
             if error != nil{
-                println("Error!! \(error)")
+                print("Error!! \(error)")
                 completion([Item](), error as NSError?)
             }else{
                 if let itemsUW = results as? [Item] {
@@ -58,7 +58,7 @@ class DataManager: NSObject {
             
             if error != nil {
                 
-                if let errorString:String = error.userInfo?["error"] as? String{
+                if let errorString:String = (error! as NSError).userInfo["error"] as? String{
                     completion(false, errorString)
                 }else{
                     completion(false, "")

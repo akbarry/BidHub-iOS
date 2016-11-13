@@ -101,17 +101,17 @@ class BiddingViewController: UIViewController {
         plusFiveButton.titleLabel?.textAlignment = .center
         plusTenButton.titleLabel?.textAlignment = .center
 
-        let one = NSMutableAttributedString(string: "BID\n", attributes: bidAttrs as! [AnyHashable : Any] as [AnyHashable: Any])
-        one.appendAttributedString(NSMutableAttributedString(string: "$\(startAmount + incrementOne)", attributes: otherAttrs))
-        plusOneButton.setAttributedTitle(one, forState: .Normal)
+        let one = NSMutableAttributedString(string: "BID\n", attributes: bidAttrs as? [String : Any])
+        one.append(NSMutableAttributedString(string: "$\(startAmount + incrementOne)", attributes: otherAttrs))
+        plusOneButton.setAttributedTitle(one, for: .normal)
         
-        let five = NSMutableAttributedString(string: "BID\n", attributes: bidAttrs as! [AnyHashable : Any] as [AnyHashable: Any])
-        five.appendAttributedString(NSMutableAttributedString(string: "$\(startAmount + incrementFive)", attributes: otherAttrs))
-        plusFiveButton.setAttributedTitle(five, forState: .Normal)
+        let five = NSMutableAttributedString(string: "BID\n", attributes: bidAttrs as? [String : Any])
+        five.append(NSMutableAttributedString(string: "$\(startAmount + incrementFive)", attributes: otherAttrs))
+        plusFiveButton.setAttributedTitle(five, for: .normal)
         
-        let ten = NSMutableAttributedString(string: "BID\n", attributes: bidAttrs as! [AnyHashable : Any] as [AnyHashable: Any])
-        ten.appendAttributedString(NSMutableAttributedString(string: "$\(startAmount + incrementTen)", attributes: otherAttrs))
-        plusTenButton.setAttributedTitle(ten, forState: .Normal)
+        let ten = NSMutableAttributedString(string: "BID\n", attributes: bidAttrs as? [String : Any])
+        ten.append(NSMutableAttributedString(string: "$\(startAmount + incrementTen)", attributes: otherAttrs))
+        plusTenButton.setAttributedTitle(ten, for: .normal)
         
    
     }
@@ -152,8 +152,8 @@ class BiddingViewController: UIViewController {
         
         switch state {
         case .custom:
-            if let amount = customBidTextField.text.toInt(){
-                didSelectAmount(.Custom(amount))
+            if let amount = Int(customBidTextField.text!){
+                didSelectAmount(.custom(amount))
             }else{
                 didTapBackground("" as AnyObject)
             }

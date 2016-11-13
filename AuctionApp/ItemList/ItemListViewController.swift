@@ -7,7 +7,7 @@ import UIKit
 
 extension String {
     subscript (i: Int) -> String {
-        return String(Array(self)[i])
+        return String(Array(self.characters)[i])
     }
 }
 
@@ -53,7 +53,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         reloadData(false, initialLoad: true)
 
         let user = PFUser.current()
-        println("Logged in as: \(user.email)")
+        print("Logged in as: \(user?.email)")
         
     }
     
@@ -71,7 +71,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func pushRecieved(_ notification: Notification){
         
-        if let aps = notification.object?["aps"] as? [AnyHashable: Any]{
+        if let aps = notification.object["aps"]{
             if let alert = aps["alert"] as? String {
                 CSNotificationView.show(in: self, tintColor: UIColor.white, font: UIFont(name: "Avenir-Light", size: 14)!, textAlignment: .center, image: nil, message: alert, duration: 5.0)
                 
@@ -98,7 +98,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
                 if !silent {
                     self.showError("Error getting Items")
                 }
-                println("Error getting items")
+                print("Error getting items")
                 
             }else{
                 self.items = items
@@ -134,9 +134,9 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
                 let attributes =  [NSFontAttributeName: font] as NSDictionary
                 let item = items[indexPath.row]
                 
-                let minSize = minHeightText.boundingRectWithSize(CGSize(width: (view.frame.size.width - 40), height: 1000), options: .UsesLineFragmentOrigin, attributes: attributes as! [AnyHashable : Any] as [AnyHashable: Any], context: nil).height
+                let minSize = minHeightText.boundingRect(with: CGSize(width: (view.frame.size.width - 40), height: 1000), options: .usesLineFragmentOrigin, attributes: attributes as? [String : Any], context: nil).height
                 
-                let maxSize = item.itemDesctiption.boundingRectWithSize(CGSize(width: (view.frame.size.width - 40), height: 1000), options: .UsesLineFragmentOrigin, attributes: attributes as! [AnyHashable : Any] as [AnyHashable: Any], context: nil).height + 50
+                let maxSize = item.itemDesctiption.boundingRect(with: CGSize(width: (view.frame.size.width - 40), height: 1000), options: .usesLineFragmentOrigin, attributes: attributes as? [String : Any], context: nil).height + 50
                 
                 return (max(minSize, maxSize) + CGFloat(padding))
 
@@ -172,11 +172,11 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
 
             var donorAvatarUrl:URL = URL(string: donorAvatarStringUrl)!
             
-            cell.donorAvatar.setImageWith(URLRequest(url: donorAvatarUrl), placeholderImage: nil, success: { (urlRequest: URLRequest!, response: URLResponse!, image: UIImage!) -> Void in
+            cell.donorAvatar.setImageWithURLRequest(NSURLRequest(URL: donorAvatarUrl), placeholderImage: nil, success: { (urlRequest, response, image) in
                 cell.donorAvatar.image = image.resizedImage(to: cell.donorAvatar.bounds.size)
                 
             }, failure: { (urlRequest: URLRequest!, response: URLResponse!, error: NSError!) -> Void in
-                println("error occured: \(error)")
+                print("error occured: \(error)")
             })
         }
         
@@ -185,7 +185,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         cell.itemDescriptionLabel.text = item.itemDesctiption
         
         if item.quantity > 1 {
-            var bidsString = ", ".join(item.currentPrice.map({bidPrice in "$\(bidPrice)"}))
+            var bidsString = item.currentPrice.map({bidPrice in "$\(bidPrice)"}).joined(separator: ", ")
             if count(bidsString) == 0 {
                 bidsString = "(none yet)"
             }
@@ -301,7 +301,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         
         DataManager().sharedInstance.bidOn(item, amount: amount) { (success, errorString) -> () in
             if success {
-                println("Wohooo")
+                print("Wohooo")
                 self.items = DataManager().sharedInstance.allItems
                 self.reloadData()
                 SVProgressHUD.dismiss()
@@ -323,7 +323,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
             let alertView = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
 
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
-                println("Ok Pressed")
+                print("Ok Pressed")
             })
             
             alertView.addAction(okAction)

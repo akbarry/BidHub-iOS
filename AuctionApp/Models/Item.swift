@@ -167,7 +167,7 @@ class Item: PFObject, PFSubclassing {
     var minimumBid: Int {
         get {
             if !currentPrice.isEmpty {
-                return minElement(currentPrice)
+                return currentPrice.minElement()
             }else{
                 return price
             }
@@ -177,7 +177,7 @@ class Item: PFObject, PFSubclassing {
     var isWinning: Bool {
         get {
             let user = PFUser.current()
-            return contains(currentWinners, user.email)
+            return currentWinners.contains(user.email)
         }
     }
     
@@ -185,7 +185,7 @@ class Item: PFObject, PFSubclassing {
     var hasBid: Bool {
         get {
             let user = PFUser.current()
-            return contains(allBidders, user.email)
+            return allBidders.contains(user.email)
         }
     }
     

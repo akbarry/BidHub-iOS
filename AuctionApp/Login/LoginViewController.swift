@@ -27,26 +27,25 @@ class LoginViewController: UIViewController {
             user.password = "test"
             user.email = emailTextField.text?.lowercased()
             
-            user.signUpInBackground {
+            /* user.signUpInBackground {
                 (succeeded: Bool, error: NSError!) -> Void in
                 if succeeded == true {
                     self.registerForPush()
                     self.performSegue(withIdentifier: "loginToItemSegue", sender: nil)
                 } else {
                     let errorString = error.userInfo!["error"] as! NSString
-                    println("Error Signing up: \(error)")
+                    print("Error Signing up: \(error)")
                     PFUser.logInWithUsername(inBackground: user.username, password: user.password, block: { (user, error) -> Void in
                         if error == nil {
-                            
                             self.registerForPush()
                             self.performSegue(withIdentifier: "loginToItemSegue", sender: nil)
                         }else{
-                            println("Error logging in ")
+                            print("Error logging in ")
                             self.viewShaker?.shake()
                         }
                     })
                 }
-            }
+            } */
             
         }else{
             //Can't login with nothing set
@@ -65,11 +64,11 @@ class LoginViewController: UIViewController {
         let application = UIApplication.shared
         
         if application.responds(to: #selector(UIApplication.registerUserNotificationSettings(_:))) {
-            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Sound | UIUserNotificationType.Badge, categories: nil)
+            let settings = UIUserNotificationSettings(types:[.alert, .sound, .badge], categories: nil)
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }else{
-            let types: UIRemoteNotificationType = .Badge | .Alert | .Sound
+            let types: UIRemoteNotificationType = [.badge, .alert, .sound]
             application.registerForRemoteNotifications(matching: types)
         }
         

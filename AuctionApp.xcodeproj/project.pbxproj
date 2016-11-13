@@ -17,7 +17,6 @@
 		634C33531A1A7CB30002E9AD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634C33521A1A7CB30002E9AD /* MobileCoreServices.framework */; };
 		634C33551A1A7CBB0002E9AD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634C33541A1A7CBB0002E9AD /* QuartzCore.framework */; };
 		634C33571A1A7CC00002E9AD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634C33561A1A7CC00002E9AD /* Security.framework */; };
-		634C33591A1A7CC80002E9AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634C33581A1A7CC80002E9AD /* StoreKit.framework */; };
 		634C335B1A1A7CCD0002E9AD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634C335A1A1A7CCD0002E9AD /* SystemConfiguration.framework */; };
 		634C33661A1A7FDB0002E9AD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C33651A1A7FDB0002E9AD /* Item.swift */; };
 		634C33681A1A7FE30002E9AD /* Bid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634C33671A1A7FE30002E9AD /* Bid.swift */; };
@@ -60,7 +59,6 @@
 		634C33521A1A7CB30002E9AD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		634C33541A1A7CBB0002E9AD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		634C33561A1A7CC00002E9AD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		634C33581A1A7CC80002E9AD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		634C335A1A1A7CCD0002E9AD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		634C335C1A1A7CF40002E9AD /* AuctionApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AuctionApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		634C33651A1A7FDB0002E9AD /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Item.swift; path = Models/Item.swift; sourceTree = "<group>"; };
@@ -82,6 +80,7 @@
 		63FF2B9F1A26463000646D6B /* BlurTransitionSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurTransitionSegue.swift; sourceTree = "<group>"; };
 		6E24F8C622DA76E0DBBC3953 /* Pods-AuctionApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuctionApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-AuctionApp/Pods-AuctionApp.release.xcconfig"; sourceTree = "<group>"; };
 		82D9E0BD4D3155B0829B9C15 /* Pods-AuctionApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuctionApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AuctionApp/Pods-AuctionApp.debug.xcconfig"; sourceTree = "<group>"; };
+		894344A71DD856C3001C8872 /* Auction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Auction.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +89,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				634C335B1A1A7CCD0002E9AD /* SystemConfiguration.framework in Frameworks */,
-				634C33591A1A7CC80002E9AD /* StoreKit.framework in Frameworks */,
 				634C33571A1A7CC00002E9AD /* Security.framework in Frameworks */,
 				634C33551A1A7CBB0002E9AD /* QuartzCore.framework in Frameworks */,
 				634C33531A1A7CB30002E9AD /* MobileCoreServices.framework in Frameworks */,
@@ -147,6 +145,7 @@
 		637EEC521A1A6D250091C60B /* AuctionApp */ = {
 			isa = PBXGroup;
 			children = (
+				894344A71DD856C3001C8872 /* Auction.entitlements */,
 				63FF2B9C1A26446E00646D6B /* Bidding VC */,
 				637CD89F1A1C20A9002FF762 /* ThirdParty */,
 				63EA130C1A1ABD27002BDFDF /* Managers */,
@@ -167,7 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				634C335A1A1A7CCD0002E9AD /* SystemConfiguration.framework */,
-				634C33581A1A7CC80002E9AD /* StoreKit.framework */,
 				634C33561A1A7CC00002E9AD /* Security.framework */,
 				634C33541A1A7CBB0002E9AD /* QuartzCore.framework */,
 				634C33521A1A7CB30002E9AD /* MobileCoreServices.framework */,
@@ -285,11 +283,18 @@
 				TargetAttributes = {
 					637EEC4F1A1A6D250091C60B = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = T6C7VZ4T9X;
+						DevelopmentTeam = B652Z9874J;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplePay = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
 							};
 						};
 					};
@@ -418,8 +423,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eoin O'Connell (67CL7FNL7Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Barry (KCWKJ246K5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Alex Barry (KCWKJ246K5)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -441,7 +446,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "64820673-7e56-4a42-b781-7ad6e1ff49bf";
+				PROVISIONING_PROFILE = "4d41b4f9-1943-42e7-a801-b4f72f04d623";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -467,8 +472,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: HubSpot Inc";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HubSpot Inc";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Alex Barry (B652Z9874J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Alex Barry (B652Z9874J)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -482,7 +487,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e879759f-7c43-43e3-9639-2c4cdf720848";
+				PROVISIONING_PROFILE = "4d41b4f9-1943-42e7-a801-b4f72f04d623";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -497,8 +502,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = AuctionApp/Auction.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Barry (KCWKJ246K5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = B652Z9874J;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AuctionApp",
@@ -506,7 +513,7 @@
 				INFOPLIST_FILE = AuctionApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.HubSpot.$(PRODUCT_NAME:rfc1034identifier)App";
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.AuctionApp;
 				PRODUCT_NAME = Auction;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuctionApp/AuctionApp-Bridging-Header.h";
@@ -522,8 +529,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = AuctionApp/Auction.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Barry (KCWKJ246K5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = B652Z9874J;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AuctionApp",
@@ -531,7 +540,7 @@
 				INFOPLIST_FILE = AuctionApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.HubSpot.$(PRODUCT_NAME:rfc1034identifier)App";
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.AuctionApp;
 				PRODUCT_NAME = Auction;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AuctionApp/AuctionApp-Bridging-Header.h";
