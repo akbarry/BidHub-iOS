@@ -40,11 +40,11 @@ class BiddingViewController: UIViewController {
         
         if let itemUW = item{
             
-            incrementOne  = itemUW.priceIncrement
-            incrementFive = 2*itemUW.priceIncrement
-            incrementTen  = 5*itemUW.priceIncrement
+            // incrementOne  = itemUW.priceIncrement
+            // incrementFive = 2*itemUW.priceIncrement
+            // incrementTen  = 5*itemUW.priceIncrement
             
-            switch(itemUW.winnerType){
+            /*switch(itemUW.winnerType){
             case .multiple:
                 if itemUW.currentWinners.isEmpty{
                     setupForSingle(itemUW.price)
@@ -58,7 +58,9 @@ class BiddingViewController: UIViewController {
                 }else{
                     setupForSingle(itemUW.currentPrice.first!)
                 }
-            }
+            }*/
+            
+            setupForSingle(50) //itemUW.price)
             
             popUpContainer.backgroundColor = UIColor.white
             popUpContainer.layer.cornerRadius = 5.0

@@ -31,6 +31,7 @@
 		63FF2B9B1A26442100646D6B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF2B9A1A26442100646D6B /* Constants.swift */; };
 		63FF2B9E1A2644AE00646D6B /* BiddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF2B9D1A2644AE00646D6B /* BiddingViewController.swift */; };
 		63FF2BA01A26463000646D6B /* BlurTransitionSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF2B9F1A26463000646D6B /* BlurTransitionSegue.swift */; };
+		894344A91DD91037001C8872 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894344A81DD91037001C8872 /* GoogleService-Info.plist */; };
 		DC169F98DE70BD2DB8C3AFCE /* libPods-AuctionApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A52CA2C40DE48839DB5E372 /* libPods-AuctionApp.a */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		6A52CA2C40DE48839DB5E372 /* libPods-AuctionApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AuctionApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		853F576B370EC34FD8924275 /* Pods-AuctionApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuctionApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AuctionApp/Pods-AuctionApp.debug.xcconfig"; sourceTree = "<group>"; };
 		894344A71DD856C3001C8872 /* Auction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Auction.entitlements; sourceTree = "<group>"; };
+		894344A81DD91037001C8872 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B18F30ECC1A7AA8687896CB9 /* Pods-AuctionApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuctionApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-AuctionApp/Pods-AuctionApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,6 +176,7 @@
 		637EEC531A1A6D250091C60B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				894344A81DD91037001C8872 /* GoogleService-Info.plist */,
 				634C335A1A1A7CCD0002E9AD /* SystemConfiguration.framework */,
 				634C33561A1A7CC00002E9AD /* Security.framework */,
 				634C33541A1A7CBB0002E9AD /* QuartzCore.framework */,
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				637EEC5B1A1A6D250091C60B /* Main.storyboard in Resources */,
+				894344A91DD91037001C8872 /* GoogleService-Info.plist in Resources */,
 				637EEC601A1A6D250091C60B /* LaunchScreen.xib in Resources */,
 				637EEC5D1A1A6D250091C60B /* Images.xcassets in Resources */,
 			);

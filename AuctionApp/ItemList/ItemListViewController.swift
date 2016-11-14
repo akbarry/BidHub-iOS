@@ -52,8 +52,8 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.alpha = 0.0
         reloadData(false, initialLoad: true)
 
-        let user = PFUser.current()
-        print("Logged in as: \(user?.email)")
+        // let user = PFUser.current()
+        // print("Logged in as: \(user?.email)")
         
     }
     
@@ -91,6 +91,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         if initialLoad {
             SVProgressHUD.show()
         }
+
         DataManager().sharedInstance.getItems{ (items, error) in
         
             if error != nil {
@@ -125,7 +126,6 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         if iOS8 {
             return UITableViewAutomaticDimension
         }else{
-
             if let cell = sizingCell {
                 
                 let padding = 353
@@ -136,13 +136,13 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 let minSize = minHeightText.boundingRect(with: CGSize(width: (view.frame.size.width - 40), height: 1000), options: .usesLineFragmentOrigin, attributes: attributes as? [String : Any], context: nil).height
                 
-                let maxSize = item.itemDesctiption.boundingRect(with: CGSize(width: (view.frame.size.width - 40), height: 1000), options: .usesLineFragmentOrigin, attributes: attributes as? [String : Any], context: nil).height + 50
+                let maxSize = item.description.boundingRect(with: CGSize(width: (view.frame.size.width - 40), height: 1000), options: .usesLineFragmentOrigin, attributes: attributes as? [String : Any], context: nil).height + 50
                 
                 return (max(minSize, maxSize) + CGFloat(padding))
 
             }else{
                 return 392
-            }
+            }*/
             
         }
     }
@@ -158,13 +158,13 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
         let item = items[indexPath.row]
         
         cell.itemImageView.image = nil
-        var url:URL = URL(string: item.imageUrl)!
-        cell.itemImageView.setImageWith(url)
+        // var url:URL = URL(string: item.imageUrl)!
+        // cell.itemImageView.setImageWith(url)
         
 
-        let fullNameArr = item.donorName.components(separatedBy: " ")
+        // let fullNameArr = item.donorName.components(separatedBy: " ")
         cell.donorAvatar.image = nil;
-        if fullNameArr.count > 1{
+        /*if fullNameArr.count > 1{
             var firstName: String = fullNameArr[0]
             var lastName: String = fullNameArr[1]
             var inital: String = firstName[0]
@@ -178,29 +178,32 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
             }, failure: { (urlRequest, NSURLResponse, error) in
                 print("error occured: \(error)")
             })
-        }
+        }*/
         
-        cell.itemDonorLabel.text = item.donorName
+        cell.itemDonorLabel.text = "test" // item.donorName
         cell.itemTitleLabel.text = item.name
-        cell.itemDescriptionLabel.text = item.itemDesctiption
+        cell.itemDescriptionLabel.text = "test" // item.description
         
-        if item.quantity > 1 {
-            var bidsString = item.currentPrice.map({bidPrice in "$\(bidPrice)"}).joined(separator: ", ")
-            if bidsString.characters.count == 0 {
-                bidsString = "(none yet)"
-            }
-            
+        /*if item.quantity > 1 {
+            // var bidsString = item.currentPrice.map({bidPrice in "$\(bidPrice)"}).joined(separator: ", ")
+            // if bidsString.characters.count == 0 {
+            //    bidsString = "(none yet)"
+            // }
+            let bidsString = "(none yet)"
             cell.itemDescriptionLabel.text =
                 "\(item.quantity) available! Highest \(item.quantity) bidders win. Current highest bids are \(bidsString)" +
                 "\n\n" + cell.itemDescriptionLabel.text!
-        }
+        }*/
         cell.delegate = self;
         cell.item = item
         
         var price: Int?
         var lowPrice: Int?
 
-        switch (item.winnerType) {
+        price = 50 //item.price //item.currentPrice.first
+        cell.availLabel.text = "1 Available"
+        
+        /*switch (item.winnerType) {
         case .single:
             price = item.currentPrice.first
             cell.availLabel.text = "1 Available"
@@ -208,12 +211,12 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
             price = item.currentPrice.first
             lowPrice = item.currentPrice.last
             cell.availLabel.text = "\(item.quantity) Available"
-        }
+        }*/
         
-        let bidString = (item.numberOfBids == 1) ? "Bid":"Bids"
-        cell.numberOfBidsLabel.text = "\(item.numberOfBids) \(bidString)"
+        let bidString = "Bid" // (item.numberOfBids == 1) ? "Bid":"Bids"
+        cell.numberOfBidsLabel.text = "1 \(bidString)" // "\(item.numberOfBids) \(bidString)"
         
-        if let topBid = price {
+        /*if let topBid = price {
             if let lowBid = lowPrice{
                 if item.numberOfBids > 1{
                     cell.currentBidLabel.text = "$\(lowBid)-\(topBid)"
@@ -225,19 +228,23 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }else{
             cell.currentBidLabel.text = "$\(item.price)"
-        }
+        }*/
+        cell.currentBidLabel.text = "$50"
         
-        if !item.currentWinners.isEmpty && item.hasBid{
-            if item.isWinning{
+        cell.setWinning()
+        
+        /*if !item.currentWinners.isEmpty { // && item.hasBid{
+            cell.setWinning()
+            /*if item.isWinning{
                 cell.setWinning()
             }else{
                 cell.setOutbid()
-            }
+            }*/
         }else{
             cell.setDefault()
-        }
+        }*/
         
-        if(item.closeTime.timeIntervalSinceNow < 0.0){
+        /*if(item.closeTime.timeIntervalSinceNow < 0.0){
             cell.dateLabel.text = "Sorry, bidding has closed"
             cell.bidNowButton.isHidden = true
         }else{
@@ -249,7 +256,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
                 cell.dateLabel.text = "Bidding opens \((item.openTime as NSDate).relativeTime().lowercased())."
                 cell.bidNowButton.isHidden = true
             }
-        }
+        }*/
         
         return cell
     }
@@ -269,7 +276,7 @@ class ItemListViewController: UIViewController, UITableViewDelegate, UITableView
     }
         
     @IBAction func logoutPressed(_ sender: AnyObject) {
-        PFUser.logOut()
+        // PFUser.logOut()
         performSegue(withIdentifier: "logoutSegue", sender: nil)
     }
     

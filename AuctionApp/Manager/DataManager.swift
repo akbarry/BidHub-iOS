@@ -22,6 +22,10 @@ class DataManager: NSObject {
     
     
     func getItems(_ completion: @escaping ([Item], NSError?) -> ()){
+        
+        // let ref = FIRDatabase.database().reference(withPath: "auction-items")
+        // print(ref)
+        /*
         let query = Item.query()
         query?.limit = 1000
         query?.addAscendingOrder("closetime")
@@ -36,7 +40,7 @@ class DataManager: NSObject {
                     completion(itemsUW, nil)
                 }
             }
-        }
+        }*/
     }
     
     func searchForQuery(_ query: String) -> ([Item]) {
@@ -51,9 +55,9 @@ class DataManager: NSObject {
     
     func bidOn(_ item:Item, amount: Int, completion: @escaping (Bool, _ errorCode: String) -> ()){
         
-        let user = PFUser.current()
+        // let user = PFUser.current()
         
-        Bid(email: (user?.email)!, name: (user?.username)!, amount: amount, itemId: item.objectId)
+        /* Bid(email: (user?.email)!, name: (user?.username)!, amount: amount, itemId: item.objectId)
         .saveInBackground { (success, error) -> Void in
             
             if error != nil {
@@ -80,16 +84,16 @@ class DataManager: NSObject {
             PFPush.subscribeToChannel(inBackground: channel, block: { (success, error) -> Void in
                 
             })
-        }
+        }*/
     }
     
     func replaceItem(_ item: Item) {
-        allItems = allItems.map { (oldItem) -> Item in
+        /* allItems = allItems.map { (oldItem) -> Item in
             if oldItem.objectId == item.objectId {
                 return item
             }
             return oldItem
-        }
+        } */
     }
 }
 
@@ -120,14 +124,14 @@ enum FilterType: CustomStringConvertible {
         case .noBids:
             return NSPredicate(block: { (object, bindings) -> Bool in
                 if let item = object as? Item {
-                    return item.numberOfBids == 0
+                    return true //item.numberOfBids == 0
                 }
                 return false
             })
         case .myItems:
             return NSPredicate(block: { (object, bindings) -> Bool in
-                if let item = object as? Item {
-                    return item.hasBid
+                if (object as? Item) != nil {
+                    return false //item.hasBid
                 }
                 return false
             })

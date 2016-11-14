@@ -68,11 +68,13 @@ class ItemTableViewCell: UITableViewCell {
         headerBackground.backgroundColor = winningBackgroundColor
         moreInfoView.isHidden = false
         moreInfoView.backgroundColor = winningBackgroundColor
-        if let itemUW = item {
+        moreInfoLabel.text = "YOUR BID IS WINNING. NICE!"
+        
+        /* if let itemUW = item {
 
             switch(itemUW.winnerType){
             case .multiple:
-                let user = PFUser.current()
+                // let user = PFUser.current()
                 if let index = itemUW.currentWinners.index(of: user!.email){
                     moreInfoLabel.text = "YOUR BID IS #\(index + 1)"
                 }else{
@@ -81,7 +83,7 @@ class ItemTableViewCell: UITableViewCell {
             case .single:
                 moreInfoLabel.text = "YOUR BID IS WINNING. NICE!"
             }
-        }
+        }*/
     }
     
     func setOutbid(){

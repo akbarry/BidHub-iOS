@@ -3,57 +3,41 @@
 //  AuctionApp
 //
 
-import UIKit
+import Foundation
+import FirebaseDatabase
 
-class Bid: PFObject, PFSubclassing {
+struct Bid {
     
-    /*
-    private lazy var __once: () = {
-            self.registerSubclass()
-        }()*/
-    
-    @NSManaged var email: String
-    @NSManaged var name: String
-    
-    var amount: Int {
-        get {
-            return self["amt"] as! Int
-        }
-        set {
-            self["amt"] = newValue
-        }
-    }
-    
-    var itemId: String {
-        get {
-            return self["item"] as! String
-        }
-        set {
-            self["item"] = newValue
-        }
-    }
-    
-    //Needed
-    override init(){
-        super.init()
-    }
+    let ref: FIRDatabaseReference?
+    let email: String
+    let name: String
+    let amount: Int
+    var itemId: String
     
     init(email: String, name: String, amount: Int, itemId: String) {
-        super.init()
         self.email = email
         self.name = name
         self.amount = amount
         self.itemId = itemId
+        self.ref = nil
     }
     
-    override class func initialize() {
-        var onceToken : Int = 0;
-        //_ = self.__once
+    init(snapshot: FIRDataSnapshot) {
+        // key = snapshot.key
+        let snapshotValue = snapshot.value as! [String: AnyObject]
+        name = snapshotValue["name"] as! String
+        email = snapshotValue["email"] as! String
+        amount = snapshotValue["amount"] as! Int
+        itemId = snapshotValue["itemId"] as! String
+        ref = snapshot.ref
     }
     
-    class func parseClassName() -> String! {
-        return "NewBid"
+    func toAnyObject() -> Any {
+        return [
+            "name": name
+        ]
     }
+    
 }
 
 enum BidType {

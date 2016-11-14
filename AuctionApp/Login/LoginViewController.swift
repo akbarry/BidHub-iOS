@@ -21,11 +21,12 @@ class LoginViewController: UIViewController {
         
         if nameTextField.text != "" && emailTextField.text != "" {
             
+            /*
             var user = PFUser()
             user["fullname"] = nameTextField.text?.lowercased()
             user.username = emailTextField.text?.lowercased()
             user.password = "test"
-            user.email = emailTextField.text?.lowercased()
+            user.email = emailTextField.text?.lowercased() */
             
             /* user.signUpInBackground {
                 (succeeded: Bool, error: NSError!) -> Void in
@@ -55,10 +56,10 @@ class LoginViewController: UIViewController {
     
     
     func registerForPush() {
-        let user = PFUser.current()
-        let currentInstalation = PFInstallation.current()
-        currentInstalation?["email"] = user?.email
-        currentInstalation?.saveInBackground(nil)
+        // let user = PFUser.current()
+        // let currentInstalation = PFInstallation.current()
+        // currentInstalation?["email"] = user?.email
+        // currentInstalation?.saveInBackground(nil)
 
         
         let application = UIApplication.shared

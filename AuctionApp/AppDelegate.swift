@@ -5,33 +5,33 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        Parse.setApplicationId("<your app id>", clientKey: "<your client key>")
-        PFAnalytics.trackAppOpenedWithLaunchOptions(inBackground: launchOptions, block: nil)
+        FIRApp.configure()
         
 
         let frame = UIScreen.main.bounds
         window = UIWindow(frame: frame)
         
         
-        let currentUser = PFUser.current()
-        if currentUser != nil {
-            let itemVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController() as? UINavigationController
-            window?.rootViewController=itemVC
-        } else {
+        // let currentUser = PFUser.current()
+        // if currentUser != nil {
+        let itemVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController() as? UINavigationController
+        window?.rootViewController=itemVC
+        
+        /* } else {
             //Prompt User to Login
             let loginVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
             window?.rootViewController=loginVC
-        }
+        }*/
         
         UITextField.appearance().tintColor = UIColor.orange
 
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let currentInstalation = PFInstallation.current()
+        /* let currentInstalation = PFInstallation.current()
         
         let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
         var tokenString = ""
@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("tokenString: \(tokenString)")
         
         currentInstalation?.setDeviceTokenFrom(deviceToken)
-        currentInstalation?.saveInBackground(nil)
+        currentInstalation?.saveInBackground(nil) */
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
